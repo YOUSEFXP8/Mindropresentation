@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MINDRO · Graduation Project</title>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.1.0/reveal.min.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600;9..144,700&family=Hanken+Grotesk:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --bg:#eef2f7; --panel:#ffffff; --panel-line:rgba(15,23,42,.10);
+  --teal:#0d9488; --teal-bright:#14b8a6; --teal-deep:#0f766e;
+  --violet:#7c3aed; --violet-soft:#8b5cf6; --violet-deep:#6d28d9;
+  --amber:#d97706; --coral:#e11d48; --green:#059669;
+  --text:#0f172a; --muted:#3f4d63; --muted-dim:#697892;
+  --display:'Fraunces',Georgia,serif; --body:'Hanken Grotesk',system-ui,sans-serif;
+}
+*{ box-sizing:border-box; }
+html,body{ background:var(--bg); }
+
+#bg-glow{ position:fixed; inset:0; z-index:0; pointer-events:none;
+  background:
+    radial-gradient(1100px 760px at 76% 50%, rgba(20,184,166,.07), transparent 60%),
+    radial-gradient(820px 640px at 80% 22%, rgba(124,58,237,.05), transparent 60%),
+    linear-gradient(160deg,#f3f6fa 0%,#eaeff6 55%,#e4e9f1 100%); }
+#brain-bg{ position:fixed; inset:0; width:100%; height:100%; z-index:0; pointer-events:none; }
+
+.reveal-viewport{ background:transparent; }
+.reveal{ font-family:var(--body); color:var(--text); position:relative; z-index:1; }
+.reveal:after{ content:""; position:fixed; inset:0; z-index:2; pointer-events:none; opacity:.018;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); }
+
+.reveal .slides{ text-align:left; }
+.reveal section{ height:100%; }
+
+.reveal h1,.reveal h2,.reveal h3{ font-family:var(--display); font-weight:500; letter-spacing:-.012em; line-height:1.06; color:var(--text); margin:0; }
+.reveal h2{ font-size:2.95rem; }
+.reveal p,.reveal li{ font-family:var(--body); color:var(--muted); font-size:1.18rem; line-height:1.55; }
+.reveal strong{ color:var(--text); font-weight:700; }
+.reveal em{ font-style:italic; color:var(--teal-deep); font-weight:500; }
+
+.mask-head .mask-line{ display:block; overflow:hidden; padding-bottom:.08em; }
+.mask-head .mask-inner{ display:block; will-change:transform; }
+
+.eyebrow{ font-family:var(--body); font-weight:700; font-size:.76rem; letter-spacing:.3em; text-transform:uppercase; color:var(--teal); display:inline-flex; align-items:center; gap:.7rem; }
+.eyebrow:before{ content:""; width:34px; height:2px; border-radius:2px; background:linear-gradient(90deg,var(--teal),var(--violet)); }
+
+.slide-pad{ padding:0 7%; height:100%; display:flex; flex-direction:column; justify-content:center; }
+.slide-pad.top{ justify-content:flex-start; padding-top:5.6%; }
+.headblock{ margin-bottom:1.5rem; }
+.headblock h2{ margin-top:.85rem; }
+.headblock .lead{ margin-top:.95rem; }
+
+.speaker{ position:absolute; bottom:3%; left:7%; z-index:5; font-family:var(--body); font-size:.7rem; letter-spacing:.18em; text-transform:uppercase; color:var(--muted-dim); }
+.speaker b{ color:var(--teal); font-weight:700; }
+
+/* TITLE */
+.title-wrap{ display:flex; flex-direction:column; justify-content:center; height:100%; padding:0 7%; }
+.brand{ font-family:var(--display); font-weight:600; font-size:8.2rem; line-height:.9; letter-spacing:-.025em; margin-top:1rem;
+  background:linear-gradient(110deg,var(--text) 0%,var(--teal-deep) 46%,var(--violet-deep) 82%,var(--text) 100%);
+  background-size:220% 100%; -webkit-background-clip:text; background-clip:text; color:transparent;
+  filter:drop-shadow(0 12px 24px rgba(13,148,136,.14)); animation:shimmer 11s ease-in-out infinite; }
+@keyframes shimmer{ 0%,100%{ background-position:0 0; } 50%{ background-position:100% 0; } }
+.brand .dot{ -webkit-text-fill-color:var(--teal); }
+.tagline{ font-family:var(--display); font-style:italic; font-weight:300; font-size:1.9rem; color:var(--text); margin-top:.5rem; max-width:22ch; line-height:1.15; }
+.value{ color:var(--muted); font-size:1.12rem; max-width:56ch; margin-top:1.3rem; line-height:1.62; }
+.value .hl{ color:var(--teal-deep); font-weight:600; }
+.title-meta{ display:flex; gap:4rem; margin-top:2.2rem; flex-wrap:wrap; }
+.title-meta .lbl{ font-size:.66rem; letter-spacing:.24em; text-transform:uppercase; color:var(--muted-dim); margin-bottom:.5rem; }
+.title-meta .names{ color:var(--text); font-size:1rem; line-height:1.75; font-weight:500; }
+.title-meta .names span{ color:var(--muted-dim); }
+
+.lead{ font-size:1.42rem; color:var(--text); max-width:52ch; line-height:1.42; font-family:var(--display); font-weight:300; }
+
+/* CARDS */
+.cards{ display:grid; gap:1.05rem; align-items:stretch; }
+.cards.three{ grid-template-columns:repeat(3,1fr); }
+.cards.four{ grid-template-columns:repeat(4,1fr); margin-bottom: 40px;}
+.cards.five{
+    grid-template-columns: repeat(5, minmax(0,1fr));
+    gap:0.6rem;
+    transform:scale(0.92);
+    transform-origin:top center;
+}
+.card{ background:var(--panel); border:1px solid var(--panel-line); border-radius:15px;
+  padding:1.4rem 1.35rem; position:relative; overflow:hidden;
+  box-shadow:0 14px 30px -22px rgba(15,42,60,.22);
+  transition:transform .35s cubic-bezier(.2,.7,.2,1), box-shadow .35s ease, border-color .35s ease; }
+.card .accent{ position:absolute; left:1.35rem; top:0; width:34px; height:3px; border-radius:0 0 3px 3px; background:linear-gradient(90deg,var(--teal),var(--violet)); }
+.card .sheen{ position:absolute; inset:0; pointer-events:none;
+  background:linear-gradient(105deg,transparent 36%,rgba(255,255,255,.45) 50%,transparent 64%); transform:translateX(-130%); }
+.card:hover{ transform:translateY(-5px); box-shadow:0 24px 44px -26px rgba(13,148,136,.3); border-color:rgba(13,148,136,.28); }
+.card .ico{ width:42px; height:42px; margin-bottom:.85rem; position:relative; z-index:1; }
+.card h3{ font-size:1.2rem; margin-bottom:.4rem; color:var(--text); font-weight:600; position:relative; z-index:1; }
+.card p{ font-size:.98rem; line-height:1.45; color:var(--muted); position:relative; z-index:1; }
+.card .num{ font-family:var(--display); font-size:.86rem; color:var(--teal); letter-spacing:.08em; margin:.5rem 0 .55rem; display:block; font-weight:600; position:relative; z-index:1; }
+
+/* LR cards */
+.lr-card{ padding:1.25rem 1.15rem; }
+.lr-card .dom{ font-family:var(--display); font-size:1.12rem; color:var(--text); font-weight:600; margin-bottom:.55rem; }
+.lr-card .gap{ font-size:.92rem; line-height:1.4; color:var(--muted); }
+.lr-card .gap b{ color:var(--coral); font-weight:600; }
+.lr-take{ margin-top:1.4rem; text-align:center; font-family:var(--display); font-size:1.45rem; font-weight:400; color:var(--text); }
+.lr-take em{ color:var(--teal-deep); font-style:italic; }
+
+.tag-note{ margin-top:1.6rem; display:inline-flex; align-items:center; gap:.7rem; align-self:flex-start;
+  font-size:.93rem; color:var(--muted); background:rgba(13,148,136,.06); border:1px solid rgba(13,148,136,.22); padding:.58rem 1.1rem; border-radius:999px; }
+.tag-note .pulse{ width:9px; height:9px; border-radius:50%; background:var(--teal); box-shadow:0 0 0 0 rgba(13,148,136,.45); animation:pulse 2.4s infinite; }
+@keyframes pulse{ 0%{box-shadow:0 0 0 0 rgba(13,148,136,.45);} 70%{box-shadow:0 0 0 11px rgba(13,148,136,0);} 100%{box-shadow:0 0 0 0 rgba(13,148,136,0);} }
+
+/* DIAGRAMS */
+.diagram{ width:100%; display:block; margin:.4rem auto 0; }
+#wf-svg{ height:54vh; max-height:430px; }
+#uc-svg{
+    display: block;
+    width: 75%;
+    max-width: 1100px;
+    height: 75%;
+    margin: 0 auto;
+}
+.cap{ text-align:center; color:var(--muted); font-size:1rem; max-width:80ch; margin:.5rem auto 0; }
+.cap em{ font-style:normal; color:var(--teal-deep); font-weight:600; }
+
+/* SOFTWARE PROCESS stepper */
+.stepper{ display:flex; align-items:stretch; margin-top:1.6rem; }
+.step{ flex:1; background:var(--panel); border:1px solid var(--panel-line); border-radius:14px; padding:1.15rem 1rem 1.2rem; position:relative; box-shadow:0 14px 28px -24px rgba(15,42,60,.2); }
+.step .pn{ display:inline-flex; align-items:center; justify-content:center; width:30px; height:30px; border-radius:9px; background:linear-gradient(135deg,var(--teal),var(--violet)); color:#fff; font-weight:800; font-size:.95rem; margin-bottom:.7rem; }
+.step h4{ font-family:var(--display); font-size:1.04rem; font-weight:600; color:var(--text); margin:0 0 .15rem; }
+.step .dt{ font-size:.74rem; letter-spacing:.04em; color:var(--teal-deep); font-weight:600; margin-bottom:.5rem; }
+.step p{ font-size:.86rem; line-height:1.38; color:var(--muted); }
+.step-arrow{ display:flex; align-items:center; color:var(--muted-dim); font-size:1.2rem; padding:0 .35rem; }
+
+/* TECH grid */
+.tech-grid{ display:grid; grid-template-columns:repeat(2,1fr); gap:1.05rem; margin-top:1.6rem; }
+.tech-card{ background:var(--panel); border:1px solid var(--panel-line); border-radius:15px; padding:1.25rem 1.3rem; box-shadow:0 14px 30px -24px rgba(15,42,60,.2); }
+.tech-card .tt{ display:flex; align-items:center; gap:.6rem; font-family:var(--display); font-size:1.12rem; font-weight:600; color:var(--text); margin-bottom:.85rem; }
+.tech-card .tt .d{ width:10px; height:10px; border-radius:3px; background:linear-gradient(135deg,var(--teal),var(--violet)); }
+.chips{ display:flex; flex-wrap:wrap; gap:.45rem; }
+.chip{ font-size:.84rem; font-weight:600; color:var(--teal-deep); background:rgba(13,148,136,.07); border:1px solid rgba(13,148,136,.2); padding:.3rem .7rem; border-radius:999px; }
+.tech-card.v .chip{ color:var(--violet-deep); background:rgba(124,58,237,.07); border-color:rgba(124,58,237,.2); }
+
+/* CONCLUSION */
+.concl{ display:grid; grid-template-columns:1fr 1fr; gap:3rem; margin-top:1.5rem; }
+.concl .col h4{ font-family:var(--display); font-size:1.22rem; font-weight:600; margin-bottom:.9rem; }
+.bullets{ list-style:none; padding:0; margin:0; display:flex; flex-direction:column; gap:.75rem; }
+.bullets li{ position:relative; padding-left:1.6rem; font-size:1.0rem; line-height:1.4; color:var(--muted); }
+.bullets li strong{ color:var(--text); }
+.bullets li:before{ content:""; position:absolute; left:0; top:.5em; width:9px; height:9px; border-radius:50%; background:linear-gradient(135deg,var(--teal),var(--violet)); }
+.concl-foot{ margin-top:1.8rem; display:flex; gap:4rem; flex-wrap:wrap; align-items:flex-end; }
+.concl-foot .q{ font-family:var(--display); font-style:italic; font-size:1.7rem; color:var(--teal-deep); font-weight:500; }
+.concl-foot .lbl{ font-size:.66rem; letter-spacing:.24em; text-transform:uppercase; color:var(--muted-dim); margin-bottom:.5rem; }
+.concl-foot .names{ color:var(--text); font-size:.98rem; line-height:1.7; font-weight:500; }
+
+.reveal .progress{ color:var(--teal); height:3px; }
+.reveal .controls{ color:var(--teal); }
+.reveal .slide-number{ background:transparent; color:var(--muted-dim); font-family:var(--body); }
+</style>
+</head>
+<body>
+
+<div id="bg-glow"></div>
+<canvas id="brain-bg"></canvas>
+
+<div class="reveal">
+<div class="slides">
+
+<!-- 1. COVER -->
+<section data-slide="title">
+  <div class="title-wrap">
+    <div class="eyebrow t-anim">Applied Science Private University · Faculty of IT · Graduation Project</div>
+    <div class="brand t-anim">MINDRO<span class="dot">.</span></div>
+    <div class="tagline t-anim">A mind that learns how to heal a mind.</div>
+    <div class="title-meta t-anim">
+      <div><div class="lbl">Prepared by</div><div class="names">Abdallah El-Hakawati &nbsp;<span>·</span>&nbsp; Jude Al-Mosleh<br>Toleen Al-Ramahi &nbsp;<span>·</span>&nbsp; Yousef Al-Qadomi</div></div>
+      <div><div class="lbl">Supervised by</div><div class="names">Dr. Muath Alali</div></div>
+    </div>
+  </div>
+  <aside class="notes">Welcome. MINDRO is an AI driven adaptive XR therapy system for PTSD. One line: it personalizes exposure, previews the brain's response before exposure for safety, and keeps learning. About 40 seconds.</aside>
+</section>
+
+
+<!-- 1. INTRO -->
+
+<section data-slide="intro">
+  <div class="slide-pad">
+    <div class="headblock">
+      <div class="eyebrow">01 · Introduction</div>
+      <h2 class="mask-head">Reimagining <em>Exposure Therapy</em></h2>
+      
+    </div>
+
+
+
+<p class="value t-anim" style="margin-top:2rem;">
+  <strong>Mindro</strong> is an AI-driven adaptive
+  <span class="hl">XR therapy</span> system for PTSD.
+  It personalizes exposure to each patient,
+  <span class="hl">previews the brain's response before exposure</span>,
+  and grows safer with every session.
+</p>
+
+  </div>
+    <div class="speaker">Presented by <b>Yousef</b></div>
+
+</section>
+
+<!-- 2. PROBLEM -->
+<section data-slide="problem">
+  <div class="slide-pad">
+    <div class="headblock">
+      <div class="eyebrow pr-anim">02 · Problem</div>
+      <h2 class="mask-head">Exposure therapy works.<br>Today, it stays <em>blunt</em>.</h2>
+      <p class="lead pr-anim">PTSD affects millions. Facing fears gradually in a safe space helps, yet current systems treat almost every patient the same way.</p>
+    </div>
+    <div class="cards three">
+      <div class="card pr-card"><span class="sheen"></span><span class="accent"></span><span class="num">Gap 01</span><h3>One size fits all</h3><p>Scenarios are pre-built for the "average" patient, not for a person's real trauma or triggers.</p></div>
+      <div class="card pr-card"><span class="sheen"></span><span class="accent"></span><span class="num">Gap 02</span><h3>No safety preview</h3><p>Clinicians cannot see how a patient might react <strong>before</strong> exposure actually happens.</p></div>
+      <div class="card pr-card"><span class="sheen"></span><span class="accent"></span><span class="num">Gap 03</span><h3>Does not adapt</h3><p>Therapy follows a fixed script instead of responding to the patient in real time.</p></div>
+    </div>
+  </div>
+  <div class="speaker">Presented by <b>Jude</b></div>
+  <aside class="notes">Set up the problem. Exposure therapy is proven but blunt in three ways: generic, no safety preview before exposure, no adaptation during treatment. These three gaps map directly to our contributions.</aside>
+</section>
+
+
+
+<!-- 3. PROPOSED SOLUTION -->
+<section data-slide="solution">
+  <div class="slide-pad">
+    <div class="headblock">
+      <div class="eyebrow so-anim">03 · Proposed Solution</div>
+      <h2 class="mask-head">Mindro closes <em>the loop</em>.</h2>
+      <p class="lead so-anim">One closed-loop system that <strong>personalizes</strong>, <strong>previews</strong>, and <strong>adapts</strong>, with a clinician in control at every step.</p>
+    </div>
+    <div class="cards four">
+      <div class="card so-card"><span class="sheen"></span><span class="accent"></span>
+        <svg class="ico" viewBox="0 0 48 48" fill="none"><rect x="6" y="10" width="36" height="26" rx="5" stroke="var(--teal)" stroke-width="2"/><path d="M14 20h20M14 26h12" stroke="var(--teal-bright)" stroke-width="2" stroke-linecap="round"/><path d="M18 36l4 5 4-5" stroke="var(--teal)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <h3>Understands the story</h3><p>Reads the patient's narrative and extracts their real triggers and intensity.</p></div>
+      <div class="card so-card"><span class="sheen"></span><span class="accent"></span>
+        <svg class="ico" viewBox="0 0 48 48" fill="none"><path d="M10 18a14 9 0 0 1 28 0v10a14 9 0 0 1-28 0z" stroke="var(--violet)" stroke-width="2"/><circle cx="18" cy="22" r="3" fill="var(--violet-soft)"/><circle cx="30" cy="22" r="3" fill="var(--violet-soft)"/><path d="M10 28a14 9 0 0 0 28 0" stroke="var(--violet)" stroke-width="2"/></svg>
+        <h3>Builds the world</h3><p>Generates a personalized VR exposure scene matched to those triggers.</p></div>
+      <div class="card so-card"><span class="sheen"></span><span class="accent"></span>
+        <svg class="ico" viewBox="0 0 48 48" fill="none"><path d="M24 8c-7 0-12 5-12 11 0 3 1 5 3 7-1 2-1 5 1 7 2 2 5 2 8 2s6 0 8-2c2-2 2-5 1-7 2-2 3-4 3-7 0-6-5-11-12-11z" stroke="var(--amber)" stroke-width="2"/><path d="M24 8v34M16 22c3-2 5-2 8 0M24 22c3-2 5-2 8 0" stroke="var(--amber)" stroke-width="1.6" stroke-linecap="round"/></svg>
+        <h3>Previews the brain</h3><p>A Digital Brain Twin simulates the likely neural response first, as a safety gate.</p></div>
+      <div class="card so-card"><span class="sheen"></span><span class="accent"></span>
+        <svg class="ico" viewBox="0 0 48 48" fill="none"><path d="M8 32c4-12 12-18 20-12 8 6 4 16-4 16-6 0-8-6-4-9" stroke="var(--teal)" stroke-width="2" stroke-linecap="round"/><path d="M34 18l5-2-1 5" stroke="var(--teal-bright)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="20" cy="24" r="2.5" fill="var(--teal-bright)"/></svg>
+        <h3>Learns every session</h3><p>Adjusts intensity and pacing from the body's real, measured responses.</p></div>
+    </div>
+    <div class="tag-note so-anim"><span class="pulse"></span> A licensed clinician reviews and signs off before any patient is exposed.</div>
+  </div>
+  <div class="speaker">Presented by <b>Jude</b></div>
+  <aside class="notes">The solution in four jobs: understand the story, build the VR world, preview the brain for safety, learn each session. Stress the safety line: a clinician approves every exposure. The AI assists, never replaces the clinician.</aside>
+</section>
+
+
+<!-- 4. LITERATURE REVIEW -->
+<section data-slide="lr">
+  <div class="slide-pad">
+    <div class="headblock">
+      <div class="eyebrow lr-anim">04 · Literature Review</div>
+      <h2 class="mask-head">Each field solved <em>one piece</em>.</h2>
+    </div>
+    <div class="cards five" >
+      <div class="card lr-card"><span class="accent"></span><div class="dom">VR exposure</div><div class="gap">Proven, but <b>static and generic</b></div></div>
+      <div class="card lr-card"><span class="accent"></span><div class="dom">Language AI</div><div class="gap">Detects signals, but <b>only labels</b></div></div>
+      <div class="card lr-card"><span class="accent"></span><div class="dom">Brain models</div><div class="gap">Accurate, but <b>healthy brains only</b></div></div>
+      <div class="card lr-card"><span class="accent"></span><div class="dom">Reinforcement learning</div><div class="gap">Adapts, but over <b>fixed choices</b></div></div>
+      <div class="card lr-card"><span class="accent"></span><div class="dom">Generative AI</div><div class="gap">Creates content, but <b>no live feedback</b></div></div>
+    </div>
+    
+    <div class="lr-take">To the best of our knowledge, none of them <em>closed the loop</em>. Mindro does.</div>
+  </div>
+  <div class="speaker">Presented by <b>Toleen</b></div>
+  <aside class="notes">Related work, five fields. VR exposure is effective but static. Language AI classifies but does not structure triggers. Brain models like TRIBE v2 are trained on healthy brains. Reinforcement learning uses fixed action sets. Generative AI has no live feedback loop. The takeaway: each solved a piece, none integrated them. That gap is our space.</aside>
+</section>
+
+
+<!-- 5. WORKFLOW -->
+<section data-slide="workflow">
+  <div class="slide-pad top">
+    <div class="headblock" style="margin-bottom:.4rem;">
+      <div class="eyebrow wf-anim">05 · System Pipeline</div>
+      <h2 class="mask-head">How one session <em>flows</em></h2>
+    </div>
+    <svg class="diagram" id="wf-svg" viewBox="0 0 1180 372" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <marker id="wfArrow" markerWidth="8" markerHeight="8" refX="5" refY="3" orient="auto" markerUnits="strokeWidth"><path d="M0,0 L6,3 L0,6 Z" fill="var(--muted-dim)"/></marker>
+      </defs>
+
+      <!-- main connectors -->
+      <g class="wf-links" stroke="var(--muted-dim)" stroke-width="2.2" fill="none" stroke-linecap="round" marker-end="url(#wfArrow)">
+        <path class="wf-link" d="M178 150 H198"/>
+        <path class="wf-link" d="M378 150 H398"/>
+        <path class="wf-link" d="M578 150 H598"/>
+        <path class="wf-link" d="M778 150 H798"/>
+        <path class="wf-link" d="M978 150 H998"/>
+      </g>
+
+      <!-- pass / fail -->
+      <path class="wf-fail" d="M690 208 C690 256 490 256 490 208" stroke="var(--coral)" stroke-width="2" stroke-dasharray="6 6" fill="none" stroke-linecap="round"/>
+      <text class="wf-tag" x="590" y="274" text-anchor="middle" fill="var(--coral)" font-family="Hanken Grotesk" font-size="13" font-weight="700">fail · regenerate</text>
+
+      <!-- learning loop -->
+      <path class="wf-loop" d="M1090 208 C1090 344 290 344 290 208" stroke="var(--teal)" stroke-width="2" stroke-dasharray="2 7" fill="none" stroke-linecap="round" opacity=".85"/>
+      <text class="wf-tag" x="690" y="338" text-anchor="middle" fill="var(--teal-deep)" font-family="Hanken Grotesk" font-size="13.5" font-weight="700">continuous learning · writes to Neural Therapy History</text>
+
+      <!-- cards -->
+      <!-- 1 -->
+      <g class="wf-card" data-cx="90">
+        <rect x="2" y="92" width="176" height="116" rx="15" fill="#ffffff" stroke="rgba(15,23,42,.12)" stroke-width="1.4"/>
+        <circle cx="90" cy="92" r="17" fill="var(--teal)"/><text x="90" y="98" text-anchor="middle" font-size="16" font-weight="800" fill="#fff" font-family="Hanken Grotesk">1</text>
+        <text x="90" y="142" text-anchor="middle" font-family="Hanken Grotesk"><tspan x="90" font-size="15" font-weight="600" fill="var(--text)">Intake &amp;</tspan><tspan x="90" dy="19" font-size="13" fill="var(--muted)">KPI baseline</tspan></text>
+      </g>
+      <!-- 2 -->
+      <g class="wf-card" data-cx="290">
+        <rect x="202" y="92" width="176" height="116" rx="15" fill="#ffffff" stroke="rgba(15,23,42,.12)" stroke-width="1.4"/>
+        <circle cx="290" cy="92" r="17" fill="var(--teal)"/><text x="290" y="98" text-anchor="middle" font-size="16" font-weight="800" fill="#fff" font-family="Hanken Grotesk">2</text>
+        <text x="290" y="142" text-anchor="middle" font-family="Hanken Grotesk"><tspan x="290" font-size="15" font-weight="600" fill="var(--text)">NLP trigger</tspan><tspan x="290" dy="19" font-size="13" fill="var(--muted)">extraction</tspan></text>
+      </g>
+      <!-- 3 -->
+      <g class="wf-card" data-cx="490">
+        <rect x="402" y="92" width="176" height="116" rx="15" fill="#ffffff" stroke="rgba(15,23,42,.12)" stroke-width="1.4"/>
+        <circle cx="490" cy="92" r="17" fill="var(--violet)"/><text x="490" y="98" text-anchor="middle" font-size="16" font-weight="800" fill="#fff" font-family="Hanken Grotesk">3</text>
+        <text x="490" y="142" text-anchor="middle" font-family="Hanken Grotesk"><tspan x="490" font-size="15" font-weight="600" fill="var(--text)">Stimulus</tspan><tspan x="490" dy="19" font-size="13" fill="var(--muted)">generation</tspan></text>
+      </g>
+      <!-- 4 -->
+      <g class="wf-card" data-cx="690">
+        <rect x="602" y="92" width="176" height="116" rx="15" fill="#fffaf2" stroke="var(--amber)" stroke-width="1.6"/>
+        <circle cx="690" cy="92" r="17" fill="var(--amber)"/><text x="690" y="98" text-anchor="middle" font-size="16" font-weight="800" fill="#fff" font-family="Hanken Grotesk">4</text>
+        <text x="690" y="142" text-anchor="middle" font-family="Hanken Grotesk"><tspan x="690" font-size="15" font-weight="600" fill="var(--text)">Brain Twin</tspan><tspan x="690" dy="19" font-size="13" fill="var(--muted)">safety check</tspan></text>
+      </g>
+      <!-- 5 -->
+      <g class="wf-card" data-cx="890">
+        <rect x="802" y="92" width="176" height="116" rx="15" fill="#ffffff" stroke="rgba(15,23,42,.12)" stroke-width="1.4"/>
+        <circle cx="890" cy="92" r="17" fill="var(--teal)"/><text x="890" y="98" text-anchor="middle" font-size="16" font-weight="800" fill="#fff" font-family="Hanken Grotesk">5</text>
+        <text x="890" y="142" text-anchor="middle" font-family="Hanken Grotesk"><tspan x="890" font-size="15" font-weight="600" fill="var(--text)">XR session</tspan><tspan x="890" dy="19" font-size="13" fill="var(--muted)">+ clinician</tspan></text>
+      </g>
+      <!-- 6 -->
+      <g class="wf-card" data-cx="1090">
+        <rect x="1002" y="92" width="176" height="116" rx="15" fill="#ffffff" stroke="rgba(15,23,42,.12)" stroke-width="1.4"/>
+        <circle cx="1090" cy="92" r="17" fill="var(--violet)"/><text x="1090" y="98" text-anchor="middle" font-size="16" font-weight="800" fill="#fff" font-family="Hanken Grotesk">6</text>
+        <text x="1090" y="142" text-anchor="middle" font-family="Hanken Grotesk"><tspan x="1090" font-size="15" font-weight="600" fill="var(--text)">Feedback</tspan><tspan x="1090" dy="19" font-size="13" fill="var(--muted)">&amp; history</tspan></text>
+      </g>
+    </svg>
+    <p class="cap wf-anim">Steps 1 to 4 run <em>before</em> exposure. The Brain Twin gates each scene: <em>pass</em> goes to a clinician-led session, <em>fail</em> regenerates it. The dashed loop feeds every outcome back so the next session improves.</p>
+  </div>
+  <div class="speaker">Presented by <b>Toleen</b></div>
+  <aside class="notes">Walk it once, left to right. Intake and baseline vitals, extract triggers, generate the scene, then the Brain Twin safety check. Fail regenerates, pass goes to a clinician supervised XR session. Then feedback and Neural Therapy History. The dashed loop is the headline: it is a closed loop, every session tunes the next.</aside>
+</section>
+
+<!-- 6. SOFTWARE PROCESS -->
+<section data-slide="software">
+  <div class="slide-pad">
+    <div class="headblock">
+      <div class="eyebrow sp-anim">06 · Software Process</div>
+      <h2 class="mask-head">Agile, inside a <em>phased</em> plan.</h2>
+      <p class="lead sp-anim">Five milestone-driven phases give clear structure; Agile practices inside each phase allow parallel work and iteration. Safety-critical parts are built and validated incrementally.</p>
+    </div>
+    <div class="stepper">
+      <div class="step sp-card"><span class="pn">1</span><h4>Plan &amp; Setup</h4><div class="dt">Aug</div><p>Scope, roles, and development environment.</p></div>
+      <div class="step-arrow sp-arrow">›</div>
+      <div class="step sp-card"><span class="pn">2</span><h4>Core Modules</h4><div class="dt">Aug – Sep</div><p>NLP, generator, Brain Twin, KPIs, history built in parallel.</p></div>
+      <div class="step-arrow sp-arrow">›</div>
+      <div class="step sp-card"><span class="pn">3</span><h4>Integration &amp; RL</h4><div class="dt">Sep – Oct</div><p>Connect the pipeline and add the learning agent.</p></div>
+      <div class="step-arrow sp-arrow">›</div>
+      <div class="step sp-card"><span class="pn">4</span><h4>Testing &amp; Validation</h4><div class="dt">Oct – Nov</div><p>End-to-end and safety testing of the full loop.</p></div>
+      <div class="step-arrow sp-arrow">›</div>
+      <div class="step sp-card"><span class="pn">5</span><h4>Delivery</h4><div class="dt">Nov – Jan</div><p>Report, demo, and final submission.</p></div>
+    </div>
+  </div>
+  <div class="speaker">Presented by <b>Yousef</b></div>
+  <aside class="notes">We use Agile inside a phased, milestone-driven plan. Five phases from planning to delivery. The reason: safety-critical parts like the Brain Twin gate must be built and checked incrementally, not all at the end. Keep this brief.</aside>
+</section>
+
+<!-- 7. USE CASE -->
+<section data-slide="usecase">
+  <div class="slide-pad top">
+    <div class="headblock" style="margin-bottom:.3rem;">
+      <div class="eyebrow uc-anim">07 · Use Case Diagram</div>
+    </div>
+    <img class="diagram" id="uc-svg" src="UseCase.jpg" alt="Use case diagram showing the interactions between the patient, clinician, and Mindro system across the therapy workflow.">
+    <p class="cap uc-anim">Only two people interact with Mindro: the <em>patient</em> who tells their story and lives the session, and the <em>clinician</em> who approves and oversees everything.</p>
+  </div>
+  <div class="speaker">Presented by <b>Yousef</b></div>
+  <aside class="notes">Two human actors only. The patient submits a story, records vitals, undergoes the VR session. The supervisor reviews and signs off, monitors live, and views history. Everything else is automated inside the system.</aside>
+</section>
+
+<!-- 8. TECHNOLOGY & TOOLS -->
+<section data-slide="tech">
+  <div class="slide-pad">
+    <div class="headblock">
+      <div class="eyebrow te-anim">08 · Technology &amp; Tools</div>
+      <h2 class="mask-head">A modular, API-first <em>stack</em>.</h2>
+    </div>
+    <div class="tech-grid">
+      <div class="tech-card te-card"><div class="tt"><span class="d"></span>AI &amp; Data</div><div class="chips"><span class="chip">Python</span><span class="chip">PyTorch</span><span class="chip">TensorFlow</span><span class="chip">scikit-learn</span><span class="chip">Hugging Face</span><span class="chip">NumPy</span><span class="chip">pandas</span></div></div>
+      <div class="tech-card te-card "><div class="tt"><span class="d"></span>Neuro &amp; Signals</div><div class="chips"><span class="chip">MNE-Python</span><span class="chip">Nilearn</span><span class="chip">NiBabel</span><span class="chip">NeuroKit2</span><span class="chip">spaCy</span><span class="chip">NLTK</span></div></div>
+      <div class="tech-card te-card"><div class="tt"><span class="d"></span>XR &amp; Sensors</div><div class="chips"><span class="chip">Unity</span><span class="chip">VR headset</span><span class="chip">Spatial audio</span><span class="chip">Wearable vitals</span></div></div>
+      <div class="tech-card te-card "><div class="tt"><span class="d"></span>Backend &amp; Infrastructure</div><div class="chips"><span class="chip">ASP.NET</span><span class="chip">REST APIs</span><span class="chip">Web dashboard</span><span class="chip">SQL database</span><span class="chip">GPU cloud</span></div></div>
+    </div>
+  </div>
+  <div class="speaker">Presented by <b>Abdullah</b></div>
+  <aside class="notes">The stack is modular and API first. Python for AI and data, neuroscience libraries for signals and the brain twin, Unity and wearables for XR and vitals, and an ASP.NET backend with a web dashboard on GPU cloud. Final choices may be refined in GP2.</aside>
+</section>
+
+<!-- 9. CONCLUSION -->
+<section data-slide="conclusion">
+  <div class="slide-pad">
+    <div class="headblock">
+      <div class="eyebrow co-anim">09 · Conclusion</div>
+      <h2 class="mask-head">One loop, three <em>contributions</em>.</h2>
+    </div>
+    <div class="concl">
+      <div class="col co-anim">
+        <h4 style="color:var(--teal-deep);">What Mindro contributes</h4>
+        <ul class="bullets">
+          <li><strong>Triggers, not labels:</strong> a story becomes an exposure-ready plan.</li>
+          <li><strong>A safety net that thinks:</strong> the Brain Twin previews risk before exposure, with no brain scan.</li>
+          <li><strong>Therapy that compounds:</strong> every session makes the next safer and better.</li>
+        </ul>
+      </div>
+      <div class="col co-anim">
+        <h4 style="color:var(--teal-deep);">Where we go next</h4>
+        <ul class="bullets">
+          <li>Build and integrate the components in GP2.</li>
+          <li>Validate outcomes in supervised clinical settings.</li>
+          <li>Extend the Brain Twin with live EEG and fMRI.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="concl-foot co-anim">
+      <div>
+        <div class="lbl">The team</div>
+        <div class="names">Abdallah El-Hakawati · Jude Al-Mosleh · Toleen Al-Ramahi · Yousef Al-Qadomi<br><span style="color:var(--muted-dim);">Supervised by Dr. Muath Alali</span></div>
+      </div>
+      <div class="q">Thank you. Questions?</div>
+    </div>
+  </div>
+  <div class="speaker">Presented by <b>Abdallah</b></div>
+  <aside class="notes">Close on the contributions: triggers not labels, a safety net that thinks, therapy that compounds. Then next steps and thanks. Likely questions: data and ethics, how the brain twin is validated, GP2 scope versus future work.</aside>
+</section>
+
+</div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.1.0/reveal.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.1.0/plugin/notes/notes.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/MotionPathPlugin.min.js"></script>
+
+<script>
+/* ============ TOP-DOWN BRAIN BACKGROUND (traced from reference · superior view · right third · fades inward) ============ */
+(function(){
+  const c=document.getElementById('brain-bg'), ctx=c.getContext('2d');
+  const reduce=!!(window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches);
+  const TAU=6.2832;
+
+  /* Hemisphere silhouettes traced from the reference image (local coords, front = -y) */
+  const RIGHT_OUTLINE=[[0.1277,-0.93],[0.0605,-0.9004],[0.0228,-0.8252],[0.0336,-0.7499],[0.0121,-0.637],[0.0363,-0.5429],[0.0148,-0.344],[0.0336,-0.2795],[0.0148,-0.1882],[0.047,-0.121],[0.0148,-0.0376],[0.0336,0.0779],[0.0121,0.2043],[0.0417,0.2849],[0.0121,0.4193],[0.0336,0.6263],[0.0121,0.8117],[0.0632,0.9085],[0.1653,0.93],[0.2782,0.9031],[0.3911,0.8305],[0.4959,0.7983],[0.598,0.6666],[0.6867,0.5967],[0.7378,0.4489],[0.7889,0.3763],[0.7943,0.2768],[0.8292,0.2204],[0.8373,0.1478],[0.7835,-0.172],[0.719,-0.2768],[0.7163,-0.3763],[0.6518,-0.4596],[0.6169,-0.6048],[0.5497,-0.6639],[0.5228,-0.7392],[0.418,-0.8305],[0.2889,-0.8951]];
+  const LEFT_OUTLINE=[[-0.1707,-0.93],[-0.426,-0.8252],[-0.5201,-0.7418],[-0.5497,-0.6639],[-0.6169,-0.6048],[-0.6518,-0.4596],[-0.719,-0.3655],[-0.719,-0.2742],[-0.7862,-0.1613],[-0.8373,0.1882],[-0.7943,0.2768],[-0.7916,0.3682],[-0.7378,0.4462],[-0.7056,0.5698],[-0.5954,0.6693],[-0.5389,0.758],[-0.297,0.8951],[-0.125,0.93],[-0.0524,0.9004],[-0.0121,0.8171],[-0.0336,0.6343],[-0.0121,0.4086],[-0.039,0.2903],[-0.0121,0.2097],[-0.0336,0.0779],[-0.0148,-0.043],[-0.047,-0.1236],[-0.0148,-0.1855],[-0.0309,-0.2849],[-0.0121,-0.4086],[-0.0363,-0.5483],[-0.0121,-0.6612],[-0.039,-0.8762],[-0.0954,-0.9219]];
+  /* Per-hemisphere [y, innerX (near midline), outerX (lateral)] for keeping gyri inside the cortex */
+  const RIGHT_BAND=[[-0.901,0.0605,0.2567],[-0.853,0.0309,0.3481],[-0.804,0.0228,0.4475],[-0.755,0.0309,0.5067],[-0.706,0.0202,0.5389],[-0.658,0.0148,0.5604],[-0.609,0.0175,0.6115],[-0.56,0.0309,0.6357],[-0.512,0.0282,0.6491],[-0.463,0.0175,0.6518],[-0.414,0.0148,0.6975],[-0.365,0.0148,0.719],[-0.317,0.0202,0.7244],[-0.268,0.0282,0.7244],[-0.219,0.0148,0.7593],[-0.171,0.0202,0.7835],[-0.122,0.047,0.7916],[-0.073,0.0228,0.7916],[-0.024,0.0148,0.8185],[0.024,0.0175,0.8238],[0.073,0.0336,0.8158],[0.122,0.0228,0.8292],[0.171,0.0148,0.8373],[0.219,0.0148,0.8292],[0.268,0.0309,0.8023],[0.317,0.0282,0.797],[0.365,0.0175,0.7916],[0.414,0.0148,0.7674],[0.463,0.0121,0.7378],[0.512,0.0121,0.7298],[0.56,0.0148,0.7109],[0.609,0.0255,0.6733],[0.658,0.0282,0.6061],[0.706,0.0202,0.5739],[0.755,0.0148,0.5416],[0.804,0.0121,0.4852],[0.853,0.0228,0.3642],[0.901,0.0551,0.2836]];
+  const LEFT_BAND=[[-0.901,-0.0605,-0.254],[-0.853,-0.0282,-0.3481],[-0.804,-0.0228,-0.4475],[-0.755,-0.0309,-0.5067],[-0.706,-0.0202,-0.5389],[-0.658,-0.0121,-0.5577],[-0.609,-0.0148,-0.6115],[-0.56,-0.0309,-0.6357],[-0.512,-0.0255,-0.6491],[-0.463,-0.0175,-0.6518],[-0.414,-0.0148,-0.6975],[-0.365,-0.0148,-0.719],[-0.317,-0.0202,-0.7217],[-0.268,-0.0282,-0.7244],[-0.219,-0.0148,-0.7593],[-0.171,-0.0202,-0.7835],[-0.122,-0.0443,-0.7916],[-0.073,-0.0228,-0.7916],[-0.024,-0.0148,-0.8158],[0.024,-0.0175,-0.8238],[0.073,-0.0336,-0.8131],[0.122,-0.0202,-0.8292],[0.171,-0.0148,-0.8373],[0.219,-0.0148,-0.8265],[0.268,-0.0309,-0.8023],[0.317,-0.0282,-0.797],[0.365,-0.0175,-0.7916],[0.414,-0.0121,-0.7647],[0.463,-0.0121,-0.7351],[0.512,-0.0121,-0.7271],[0.56,-0.0148,-0.7109],[0.609,-0.0255,-0.6733],[0.658,-0.0255,-0.6061],[0.706,-0.0202,-0.5712],[0.755,-0.0148,-0.5389],[0.804,-0.0121,-0.4852],[0.853,-0.0202,-0.3642],[0.901,-0.0524,-0.2836]];
+  const HEMIS=[{out:RIGHT_OUTLINE,band:RIGHT_BAND,sign:1},{out:LEFT_OUTLINE,band:LEFT_BAND,sign:-1}];
+
+  let hwMax=0;
+  for(const h of HEMIS) for(const p of h.out){ const ax=Math.abs(p[0]); if(ax>hwMax) hwMax=ax; }
+
+  /* faint inner rim per hemisphere = cortical thickness */
+  function centroid(o){ let x=0,y=0; for(const p of o){x+=p[0];y+=p[1];} return [x/o.length,y/o.length]; }
+  HEMIS.forEach(h=>{ const k=centroid(h.out); h.inner=h.out.map(p=>[k[0]+(p[0]-k[0])*0.94, k[1]+(p[1]-k[1])*0.955]); });
+
+  function bandAt(band,f){
+    if(f<=band[0][0]) return [band[0][1],band[0][2]];
+    const L=band[band.length-1]; if(f>=L[0]) return [L[1],L[2]];
+    for(let i=0;i<band.length-1;i++){ const a=band[i],b=band[i+1];
+      if(f>=a[0]&&f<=b[0]){ const r=(f-a[0])/(b[0]-a[0]); return [a[1]+(b[1]-a[1])*r, a[2]+(b[2]-a[2])*r]; } }
+    return [band[0][1],band[0][2]];
+  }
+
+  let DPR,bScale,cx,cy,folds=[],pulses=[],t=0,mx=0,my=0,tx=0,ty=0;
+
+  function buildFolds(){
+    folds=[];
+    /* gyri: meandering ridges wandering front-to-back inside each hemisphere band */
+    const nR=6, steps=46;
+    for(const h of HEMIS){
+      const ph0=(h.sign>0?0:1.15);
+      for(let r=0;r<nR;r++){
+        const d=0.10+r*0.150;
+        const ph=r*1.9+ph0;
+        const pts=[];
+        for(let i=0;i<=steps;i++){
+          const u=i/steps, f=-0.80+1.60*u;
+          const bd=bandAt(h.band,f), inner=bd[0], outer=bd[1];
+          if(Math.abs(outer-inner)<0.06) continue;
+          let frac=0.10+d*0.80
+                 + Math.sin(u*5.4+ph)*0.060
+                 + Math.sin(u*10.8+ph*1.6)*0.030
+                 + Math.sin(u*2.2+ph*0.7)*0.045;
+          if(frac<0.06) frac=0.06; if(frac>0.93) frac=0.93;
+          pts.push([inner+(outer-inner)*frac, f]);
+        }
+        if(pts.length>4) folds.push({pts,w:1.05,a:0.165-r*0.012});
+      }
+      /* short transverse sulci for texture */
+      for(let m=0;m<3;m++){
+        const f=-0.42+m*0.40, bd=bandAt(h.band,f), w=bd[1]-bd[0];
+        const xi=bd[0]+w*0.14, xo=bd[0]+w*0.72;
+        folds.push({pts:[[xi,f-0.02],[(xi+xo)*0.5,f+0.035],[xo,f-0.005]],w:0.85,a:0.09});
+      }
+    }
+  }
+
+  function build(){
+    DPR=Math.min(2,devicePixelRatio||1);
+    c.width=innerWidth*DPR; c.height=innerHeight*DPR; ctx.setTransform(DPR,0,0,DPR,0,0);
+    bScale=Math.min(innerHeight*0.40, innerWidth*0.34);   /* whole brain stays on screen */
+    cx=innerWidth*0.76; cy=innerHeight*0.50;              /* anchored in the right third */
+    buildFolds(); pulses=[];
+  }
+
+  const fadeAt=sx=>Math.min(1,Math.max(0,(sx/innerWidth-0.42)/0.26));
+  const PX=p=>cx+(p[0]+Math.sin(t*0.15)*0.008)*bScale+tx*8;
+  const PY=p=>cy+(p[1]+Math.cos(t*0.13)*0.006)*bScale+ty*8;
+
+  function smooth(pts,closed){
+    ctx.beginPath();
+    const n=pts.length, get=i=>closed?pts[(i%n+n)%n]:pts[Math.max(0,Math.min(n-1,i))];
+    ctx.moveTo(PX(get(0)),PY(get(0)));
+    const end=closed?n:n-1;
+    for(let i=0;i<end;i++){
+      const p0=get(i-1),p1=get(i),p2=get(i+1),p3=get(i+2);
+      ctx.bezierCurveTo(
+        PX(p1)+(PX(p2)-PX(p0))/6, PY(p1)+(PY(p2)-PY(p0))/6,
+        PX(p2)-(PX(p3)-PX(p1))/6, PY(p2)-(PY(p3)-PY(p1))/6,
+        PX(p2),PY(p2));
+    }
+    if(closed) ctx.closePath();
+  }
+  function along(pts,pp){
+    const P=pts.map(p=>[PX(p),PY(p)]); let tot=0; const seg=[];
+    for(let i=0;i<P.length-1;i++){ const dx=P[i+1][0]-P[i][0],dy=P[i+1][1]-P[i][1]; const dd=Math.hypot(dx,dy); seg.push(dd); tot+=dd; }
+    let tg=pp*tot,i=0; while(i<seg.length&&tg>seg[i]){ tg-=seg[i]; i++; }
+    if(i>=seg.length) return P[P.length-1];
+    const r=seg[i]?tg/seg[i]:0;
+    return [P[i][0]+(P[i+1][0]-P[i][0])*r, P[i][1]+(P[i+1][1]-P[i][1])*r];
+  }
+  function gradStroke(a){
+    const g=ctx.createLinearGradient(cx-hwMax*bScale,0,cx+hwMax*bScale,0);
+    g.addColorStop(0,'rgba(13,148,136,0)');
+    g.addColorStop(.5,'rgba(13,148,136,'+a+')');
+    g.addColorStop(1,'rgba(124,58,237,'+a+')');
+    return g;
+  }
+
+  function frame(){
+    t+=0.016; tx+=(mx-tx)*0.04; ty+=(my-ty)*0.04;
+    ctx.clearRect(0,0,innerWidth,innerHeight);
+    const breath=0.62+0.10*Math.sin(t*0.22);
+    ctx.save(); ctx.globalAlpha=breath; ctx.lineCap='round'; ctx.lineJoin='round';
+
+    /* gyri + creases */
+    for(const fd of folds){
+      const f=fadeAt(PX(fd.pts[Math.floor(fd.pts.length/2)]));
+      if(f<=0) continue;
+      ctx.strokeStyle='rgba(13,148,136,'+(fd.a*f)+')';
+      ctx.lineWidth=fd.w; smooth(fd.pts,false); ctx.stroke();
+    }
+
+    /* faint inner rim, then crisp outer silhouette, per hemisphere */
+    for(const h of HEMIS){
+      smooth(h.inner,true);
+      ctx.strokeStyle=gradStroke(.10); ctx.lineWidth=1.0; ctx.stroke();
+    }
+    ctx.shadowColor='rgba(20,184,166,.18)'; ctx.shadowBlur=9;
+    for(const h of HEMIS){
+      smooth(h.out,true);
+      ctx.strokeStyle=gradStroke(.27); ctx.lineWidth=1.9; ctx.stroke();
+    }
+    ctx.shadowBlur=0;
+
+    /* faint signals drifting along gyri */
+    if(folds.length>1 && Math.random()<0.05 && pulses.length<4){
+      pulses.push({fd:folds[(Math.random()*folds.length)|0],t:0,sp:0.005+Math.random()*0.006,v:Math.random()>0.6});
+    }
+    for(let k=pulses.length-1;k>=0;k--){
+      const pu=pulses[k]; pu.t+=pu.sp;
+      if(pu.t>=1){ pulses.splice(k,1); continue; }
+      const pos=along(pu.fd.pts,pu.t), f=fadeAt(pos[0]);
+      if(f<=0) continue;
+      const col=pu.v?'124,58,237':'20,184,166';
+      ctx.fillStyle='rgba('+col+','+(0.32*f)+')';
+      ctx.beginPath(); ctx.arc(pos[0],pos[1],2.2,0,TAU); ctx.fill();
+    }
+    ctx.restore();
+    if(!reduce) requestAnimationFrame(frame);
+  }
+
+  addEventListener('mousemove',e=>{ mx=(e.clientX/innerWidth-0.5); my=(e.clientY/innerHeight-0.5); });
+  addEventListener('resize',build);
+  build(); frame();
+})();
+
+/* ============ HEADING LINE-MASK WRAP ============ */
+(function wrapHeads(){
+  document.querySelectorAll('.mask-head').forEach(h=>{
+    if(h.dataset.wrapped) return;
+    const parts=h.innerHTML.split(/<br\s*\/?>/i);
+    h.innerHTML=parts.map(p=>'<span class="mask-line"><span class="mask-inner">'+p+'</span></span>').join('');
+    h.dataset.wrapped='1';
+  });
+})();
+if(window.MotionPathPlugin) gsap.registerPlugin(MotionPathPlugin);
+
+/* ============ REVEAL ============ */
+Reveal.initialize({
+  width:1280, height:720, margin:0.04,
+  controls:true, progress:true, slideNumber:'c/t', hash:true,
+  transition:'fade', transitionSpeed:'default', backgroundTransition:'fade',
+  controlsTutorial:false, hideInactiveCursor:true, pdfSeparateFragments:false, plugins:[ RevealNotes ]
+});
+
+/* ============ ENTRANCES (controlled, no bounce/blur) ============ */
+const ease='power3.out', easeHead='expo.out'; let active=null;
+const reduceMotion = !!(window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches);
+const ALL='.t-anim,.brand,.pr-anim,.pr-card,.lr-anim,.lr-card,.lr-take,.so-anim,.so-card,.wf-anim,.sp-anim,.sp-card,.sp-arrow,.uc-anim,.te-anim,.te-card,.chip,.co-anim,.bullets li,.mask-inner,.card .sheen,#wf-svg .wf-card,#wf-svg .wf-tag,#uc-svg .uc-core,#uc-svg .uc-actor,#uc-svg .uc-bubble';
+function clearAll(){ if(active){active.kill();active=null;} gsap.killTweensOf(ALL); gsap.set(ALL,{clearProps:'all'});
+  document.querySelectorAll('#wf-svg .wf-link,#wf-svg .wf-fail,#wf-svg .wf-loop,#uc-svg .uc-link path').forEach(p=>gsap.set(p,{clearProps:'strokeDasharray,strokeDashoffset'}));
+  document.querySelectorAll('.flow-dot').forEach(d=>d.remove()); }
+function rise(sel,t,at,st){ t.from(sel,{opacity:0,y:18,duration:.7,stagger:st||.1,ease},at); }
+function draw(sel,t,at,dur){ document.querySelectorAll(sel).forEach(l=>{const L=l.getTotalLength();gsap.set(l,{strokeDasharray:L,strokeDashoffset:L});}); t.to(sel,{strokeDashoffset:0,duration:dur||.6,stagger:.05,ease},at); }
+function sheen(scope,t,at){ const s=scope.querySelectorAll('.sheen'); if(s.length) t.fromTo(s,{xPercent:-130},{xPercent:130,duration:1.1,stagger:.12,ease:'power2.inOut'},at); }
+
+function wfDots(){
+  if(!window.MotionPathPlugin) return;
+  const svg=document.getElementById('wf-svg');
+  svg.querySelectorAll('.wf-link').forEach((p,i)=>{
+    let L=0;try{L=p.getTotalLength();}catch(e){} if(!L)return;
+    const dot=document.createElementNS('http://www.w3.org/2000/svg','circle');
+    dot.setAttribute('r','3.4');dot.setAttribute('fill','var(--teal-bright)');dot.setAttribute('class','flow-dot');dot.style.opacity='.85';
+    svg.appendChild(dot);
+    gsap.to(dot,{duration:2.6,repeat:-1,delay:0.6+i*0.4,ease:'none',motionPath:{path:p,align:p,alignOrigin:[0.5,0.5]}});
+  });
+}
+
+const anims={
+  title(t){ rise('.t-anim',t,.15,.12); },
+  problem(t,s){ rise('.pr-anim',t,.1); t.from('.pr-card',{opacity:0,y:34,duration:.65,stagger:.12,ease},.3); sheen(s,t,.6); },
+  lr(t,s){ rise('.lr-anim',t,.1); t.from('.lr-card',{opacity:0,y:30,duration:.6,stagger:.1,ease},.25); t.from('.lr-take',{opacity:0,y:16,duration:.6,ease},'+=0.05'); },
+  solution(t,s){ rise('.so-anim',t,.1); t.from('.so-card',{opacity:0,y:34,duration:.65,stagger:.11,ease},.3); sheen(s,t,.62); },
+  workflow(t,s){ rise('.wf-anim',t,.1);
+    t.from('#wf-svg .wf-card',{opacity:0,y:16,duration:.5,stagger:.1,ease},.25);
+    draw('#wf-svg .wf-link',t,.55,.4);
+    draw('#wf-svg .wf-fail',t,'+=0.05',.55); draw('#wf-svg .wf-loop',t,'-=0.1',.9);
+    t.from('#wf-svg .wf-tag',{opacity:0,duration:.4,stagger:.08},'-=0.4');
+    t.call(wfDots); },
+  software(t,s){ rise('.sp-anim',t,.1); t.from('.sp-arrow',{opacity:0,duration:.4,stagger:.12},.3); t.from('.sp-card',{opacity:0,y:26,duration:.55,stagger:.12,ease},.32); },
+  usecase(t,s){ rise('.uc-anim',t,.1);
+    t.from('#uc-svg .uc-core',{opacity:0,scale:.94,transformOrigin:'590px 210px',duration:.6,ease},.15);
+    t.from('#uc-svg .uc-actor',{opacity:0,x:(i)=>i===0?-40:40,duration:.6,stagger:.12,ease},.25);
+    t.from('#uc-svg .uc-bubble',{opacity:0,y:10,duration:.45,stagger:.08,ease},.42);
+    draw('#uc-svg .uc-link path',t,.55,.7); },
+  tech(t,s){ rise('.te-anim',t,.1); t.from('.te-card',{opacity:0,y:30,duration:.6,stagger:.12,ease},.28); t.from('.chip',{opacity:0,y:10,duration:.4,stagger:.025,ease},.5); },
+  conclusion(t,s){ rise('.co-anim',t,.12); t.from('.bullets li',{opacity:0,x:-14,duration:.45,stagger:.08,ease},.4); }
+};
+
+function play(s){
+  if(!s) return; clearAll();
+  if(reduceMotion) return;
+  const t=gsap.timeline(); active=t;
+  const inners=s.querySelectorAll('.mask-inner');
+  if(inners.length) t.from(inners,{yPercent:120,duration:.9,stagger:.12,ease:easeHead},0);
+  const k=s.getAttribute('data-slide'); if(anims[k]) anims[k](t,s);
+}
+Reveal.on('ready',e=>play(e.currentSlide));
+Reveal.on('slidechanged',e=>play(e.currentSlide));
+</script>
+</body>
+</html>
