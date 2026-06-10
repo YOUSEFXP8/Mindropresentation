@@ -158,6 +158,36 @@ html,body{ background:var(--bg); }
 .reveal .progress{ color:var(--teal); height:3px; }
 .reveal .controls{ color:var(--teal); }
 .reveal .slide-number{ background:transparent; color:var(--muted-dim); font-family:var(--body); }
+.tribe-item{
+    display:grid;
+    grid-template-columns: 60% 40%;
+    gap:30px;
+    align-items:center;
+}
+
+.tribe-item video{
+    width:100%;
+    border-radius:14px;
+}
+
+
+.tribe-text{
+    flex:1;
+}
+
+.tribe-text h3{
+    margin:0 0 8px;
+    color:var(--teal-deep);
+    font-size:1.25rem;
+}
+
+.tribe-text p{
+    margin:0;
+    font-size:1rem;
+    line-height:1.5;
+}
+.lr-card.key{ border-color:rgba(217,119,6,.4); }
+.lr-card.key .accent{ background:linear-gradient(90deg,var(--amber),var(--coral)); }
 </style>
 </head>
 <body>
@@ -214,11 +244,11 @@ html,body{ background:var(--bg); }
 <section data-slide="lr">
   <div class="slide-pad">
     <div class="headblock">
-      <div class="eyebrow lr-anim">04 · Literature Review</div>
+      <div class="eyebrow lr-anim">02 · Literature Review</div>
       <h2 class="mask-head">Each field solved <em>one piece</em>.</h2>
     </div>
     <div class="cards five" >
-      <div class="card lr-card"><span class="accent"></span><div class="dom">VR exposure</div><div class="gap">Proven, but <b>static and generic</b></div></div>
+      <div class="card lr-card"><span class="accent"></span><div class="dom">XR exposure</div><div class="gap">Proven, but <b>static and generic</b></div></div>
       <div class="card lr-card"><span class="accent"></span><div class="dom">Language AI</div><div class="gap">Detects signals, but <b>only labels</b></div></div>
       <div class="card lr-card"><span class="accent"></span><div class="dom">Brain models</div><div class="gap">Accurate, but <b>healthy brains only</b></div></div>
       <div class="card lr-card"><span class="accent"></span><div class="dom">Reinforcement learning</div><div class="gap">Adapts, but over <b>fixed choices</b></div></div>
@@ -228,7 +258,7 @@ html,body{ background:var(--bg); }
     <div class="lr-take">To the best of our knowledge, none of them <em>closed the loop</em>. Mindro does.</div>
   </div>
   <div class="speaker">Presented by <b>Toleen</b></div>
-  <aside class="notes">Related work, five fields. VR exposure is effective but static. Language AI classifies but does not structure triggers. Brain models like TRIBE v2 are trained on healthy brains. Reinforcement learning uses fixed action sets. Generative AI has no live feedback loop. The takeaway: each solved a piece, none integrated them. That gap is our space.</aside>
+  <aside class="notes">Related work, five fields. XR exposure is effective but static. Language AI classifies but does not structure triggers. Brain models like TRIBE v2 are trained on healthy brains. Reinforcement learning uses fixed action sets. Generative AI has no live feedback loop. The takeaway: each solved a piece, none integrated them. That gap is our space.</aside>
 </section>
 
 <!-- 4. LITERATURE REVIEW -->
@@ -237,7 +267,7 @@ html,body{ background:var(--bg); }
 <section data-slide="problem">
   <div class="slide-pad">
     <div class="headblock">
-      <div class="eyebrow pr-anim">02 · Problem</div>
+      <div class="eyebrow pr-anim">03 · Problem</div>
       <h2 class="mask-head">Exposure therapy works.<br>Today, it stays <em>blunt</em>.</h2>
       <p class="lead pr-anim">PTSD affects millions. Facing fears gradually in a safe space helps, yet current systems treat almost every patient the same way.</p>
     </div>
@@ -257,7 +287,7 @@ html,body{ background:var(--bg); }
 <section data-slide="solution">
   <div class="slide-pad">
     <div class="headblock">
-      <div class="eyebrow so-anim">03 · Proposed Solution</div>
+      <div class="eyebrow so-anim">04 · Proposed Solution</div>
       <h2 class="mask-head">Mindro closes <em>the loop</em>.</h2>
       <p class="lead so-anim">One closed-loop system that <strong>personalizes</strong>, <strong>previews</strong>, and <strong>adapts</strong>, with a clinician in control at every step.</p>
     </div>
@@ -267,7 +297,7 @@ html,body{ background:var(--bg); }
         <h3>Understands the story</h3><p>Reads the patient's narrative and extracts their real triggers and intensity.</p></div>
       <div class="card so-card"><span class="sheen"></span><span class="accent"></span>
         <svg class="ico" viewBox="0 0 48 48" fill="none"><path d="M10 18a14 9 0 0 1 28 0v10a14 9 0 0 1-28 0z" stroke="var(--violet)" stroke-width="2"/><circle cx="18" cy="22" r="3" fill="var(--violet-soft)"/><circle cx="30" cy="22" r="3" fill="var(--violet-soft)"/><path d="M10 28a14 9 0 0 0 28 0" stroke="var(--violet)" stroke-width="2"/></svg>
-        <h3>Builds the world</h3><p>Generates a personalized VR exposure scene matched to those triggers.</p></div>
+        <h3>Builds the world</h3><p>Generates a personalized XR exposure scene matched to those triggers.</p></div>
       <div class="card so-card"><span class="sheen"></span><span class="accent"></span>
         <svg class="ico" viewBox="0 0 48 48" fill="none"><path d="M24 8c-7 0-12 5-12 11 0 3 1 5 3 7-1 2-1 5 1 7 2 2 5 2 8 2s6 0 8-2c2-2 2-5 1-7 2-2 3-4 3-7 0-6-5-11-12-11z" stroke="var(--amber)" stroke-width="2"/><path d="M24 8v34M16 22c3-2 5-2 8 0M24 22c3-2 5-2 8 0" stroke="var(--amber)" stroke-width="1.6" stroke-linecap="round"/></svg>
         <h3>Previews the brain</h3><p>A Digital Brain Twin simulates the likely neural response first, as a safety gate.</p></div>
@@ -278,29 +308,62 @@ html,body{ background:var(--bg); }
     <div class="tag-note so-anim"><span class="pulse"></span> A licensed clinician reviews and signs off before any patient is exposed.</div>
   </div>
   <div class="speaker">Presented by <b>Jude</b></div>
-  <aside class="notes">The solution in four jobs: understand the story, build the VR world, preview the brain for safety, learn each session. Stress the safety line: a clinician approves every exposure. The AI assists, never replaces the clinician.</aside>
+  <aside class="notes">The solution in four jobs: understand the story, build the XR world, preview the brain for safety, learn each session. Stress the safety line: a clinician approves every exposure. The AI assists, never replaces the clinician.</aside>
 </section>
 
 
 
+<!-- TRIBE v2 -->
+<!-- TRIBE v2 -->
+<section data-slide="lr">
+  <div class="slide-pad top">
+    <div class="headblock" style="margin-bottom:.4rem;">
+      <div class="eyebrow lr-anim">05 · The Brain Model · TRIBE v2</div>
+      <h2 class="mask-head">Predicting the brain's <em>response</em>.</h2>
+    </div>
+ 
+
+    <p class="cap lr-anim" style="margin-top:1rem;">
+  TRIBE v2 estimates the fMRI activation a stimulus would trigger.
+  Left is the <em>stimulus</em>; right is the model's <em>predicted</em> neural activation close enough to preview a scene before a patient is ever exposed.
+</p>
+
+    <div class="tribe-item">
+        <video autoplay muted loop playsinline src="music.mp4"></video>
+
+        <div class="tribe-text">
+            <h3>Music Stimulus</h3>
+            <p>TRIBE v2 predicts the corresponding neural activation pattern generated while listening to music.</p>
+        </div>
+  </div>
+  
+  <div class="speaker">Presented by <b>Abdullah</b></div>
+  <aside class="notes">This is TRIBE v2 in action. Given a multimodal stimulus, it predicts the brain's fMRI activation pattern. On screen, the left head is the real measured response and the right is TRIBE v2's prediction the close match is what makes pre-exposure previewing credible. The limitation, and our bridge to the next slide: it was trained on general, healthy-population data, so it doesn't model PTSD-specific responses on its own. That's what our disorder-aware adaptation layer adds.</aside>
+</section>
+
+<!-- Digital Brain Twin · Architecture -->
 <section data-slide="lr">
   <div class="slide-pad">
     <div class="headblock">
-      <div class="eyebrow lr-anim">04 · Tribev2</div>
-      <h2 class="mask-head">Digital brain Twin .</h2>
+      <div class="eyebrow lr-anim">06 · Digital Brain Twin · Architecture</div>
+      <h2 class="mask-head">Adapting the twin to <em>PTSD</em>.</h2>
+      <p class="lead lr-anim">TRIBE v2 knows the healthy brain. We train a disorder-aware layer on top of it so a generated scene can be screened for its likely PTSD response before anyone is exposed.</p>
     </div>
-   
-    
+    <div class="cards four">
+      <div class="card lr-card"><span class="accent"></span><div class="dom">1 · PTSD fMRI data</div><div class="gap">Trauma-response recordings collected from PTSD-related fMRI datasets.</div></div>
+      <div class="card lr-card"><span class="accent"></span><div class="dom">2 · Feature extraction</div><div class="gap">Each scan compressed into a latent vector of its key activation patterns.</div></div>
+      <div class="card lr-card"><span class="accent"></span><div class="dom">3 · PTSD signature</div><div class="gap">Learn how those vectors deviate from a general, healthy response.</div></div>
+      <div class="card lr-card key"><span class="accent"></span><div class="dom">4 · Disorder-aware layer</div><div class="gap">An auxiliary network on TRIBE v2 outputs a PTSD-shifted estimate no live scan needed.</div></div>
+    </div>
   </div>
-  <div class="speaker">Presented by <b>Toleen</b></div>
-  <aside class="notes">Related work, five fields. VR exposure is effective but static. Language AI classifies but does not structure triggers. Brain models like TRIBE v2 are trained on healthy brains. Reinforcement learning uses fixed action sets. Generative AI has no live feedback loop. The takeaway: each solved a piece, none integrated them. That gap is our space.</aside>
+  <div class="speaker">Presented by <b>Abdullah</b></div>
+  <aside class="notes">This is how we make the Digital Brain Twin disorder-aware. TRIBE v2 is trained on healthy brains, so on its own it can't represent PTSD. Four steps fix that: collect PTSD fMRI recordings, extract a latent feature vector from each scan, learn the signature how those vectors deviate from a healthy baseline and finally add a small auxiliary network on top of frozen TRIBE v2 that shifts its prediction toward that disorder pattern. Formally it's v-prime equals v plus alpha times b: the healthy prediction v, nudged by the disorder deviation b, scaled by a personalization factor alpha. The payoff is pre-exposure safety screening without ever needing a live brain scan.</aside>
 </section>
-
 <!-- 5. WORKFLOW -->
 <section data-slide="workflow">
   <div class="slide-pad top">
     <div class="headblock" style="margin-bottom:.4rem;">
-      <div class="eyebrow wf-anim">05 · System Pipeline</div>
+      <div class="eyebrow wf-anim">07 · System Pipeline</div>
       <h2 class="mask-head">How one session <em>flows</em></h2>
     </div>
     <svg class="diagram" id="wf-svg" viewBox="0 0 1180 372" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -318,9 +381,9 @@ html,body{ background:var(--bg); }
       </g>
 
       <!-- pass / fail -->
-      <path class="wf-fail" d="M690 208 C690 256 490 256 490 208" stroke="var(--coral)" stroke-width="2" stroke-dasharray="6 6" fill="none" stroke-linecap="round"/>
-      <text class="wf-tag" x="590" y="274" text-anchor="middle" fill="var(--coral)" font-family="Hanken Grotesk" font-size="13" font-weight="700">fail · regenerate</text>
-
+      <path class="wf-fail" d="M690 208 C690 252 490 252 490 208" stroke="var(--coral)" stroke-width="2" stroke-dasharray="6 6" fill="none" stroke-linecap="round" marker-end="url(#wfArrow)"/>
+<path class="wf-fail" d="M690 208 C690 272 290 272 290 208" stroke="var(--coral)" stroke-width="2" stroke-dasharray="6 6" fill="none" stroke-linecap="round" marker-end="url(#wfArrow)"/>
+<text class="wf-tag" x="490" y="270" text-anchor="middle" fill="var(--coral)" font-family="Hanken Grotesk" font-size="13" font-weight="700">fail · regenerate</text>
       <!-- learning loop -->
       <path class="wf-loop" d="M1090 208 C1090 344 290 344 290 208" stroke="var(--teal)" stroke-width="2" stroke-dasharray="2 7" fill="none" stroke-linecap="round" opacity=".85"/>
       <text class="wf-tag" x="690" y="338" text-anchor="middle" fill="var(--teal-deep)" font-family="Hanken Grotesk" font-size="13.5" font-weight="700">continuous learning · writes to Neural Therapy History</text>
@@ -330,7 +393,7 @@ html,body{ background:var(--bg); }
       <g class="wf-card" data-cx="90">
         <rect x="2" y="92" width="176" height="116" rx="15" fill="#ffffff" stroke="rgba(15,23,42,.12)" stroke-width="1.4"/>
         <circle cx="90" cy="92" r="17" fill="var(--teal)"/><text x="90" y="98" text-anchor="middle" font-size="16" font-weight="800" fill="#fff" font-family="Hanken Grotesk">1</text>
-        <text x="90" y="142" text-anchor="middle" font-family="Hanken Grotesk"><tspan x="90" font-size="15" font-weight="600" fill="var(--text)">Intake &amp;</tspan><tspan x="90" dy="19" font-size="13" fill="var(--muted)">KPI baseline</tspan></text>
+        <text x="90" y="142" text-anchor="middle" font-family="Hanken Grotesk"><tspan x="90" font-size="15" font-weight="600" fill="var(--text)">Patient Intake </tspan><tspan x="90" dy="19" font-size="13" fill="var(--muted)">Patient KPI + Narrative</tspan></text>
       </g>
       <!-- 2 -->
       <g class="wf-card" data-cx="290">
@@ -354,7 +417,7 @@ html,body{ background:var(--bg); }
       <g class="wf-card" data-cx="890">
         <rect x="802" y="92" width="176" height="116" rx="15" fill="#ffffff" stroke="rgba(15,23,42,.12)" stroke-width="1.4"/>
         <circle cx="890" cy="92" r="17" fill="var(--teal)"/><text x="890" y="98" text-anchor="middle" font-size="16" font-weight="800" fill="#fff" font-family="Hanken Grotesk">5</text>
-        <text x="890" y="142" text-anchor="middle" font-family="Hanken Grotesk"><tspan x="890" font-size="15" font-weight="600" fill="var(--text)">XR session</tspan><tspan x="890" dy="19" font-size="13" fill="var(--muted)">+ clinician</tspan></text>
+        <text x="890" y="142" text-anchor="middle" font-family="Hanken Grotesk"><tspan x="890" font-size="15" font-weight="600" fill="var(--text)">XR Exposure</tspan><tspan x="890" dy="19" font-size="13" fill="var(--muted)">Clinical Supervisor</tspan></text>
       </g>
       <!-- 6 -->
       <g class="wf-card" data-cx="1090">
@@ -373,7 +436,7 @@ html,body{ background:var(--bg); }
 <section data-slide="software">
   <div class="slide-pad">
     <div class="headblock">
-      <div class="eyebrow sp-anim">06 · Software Process</div>
+      <div class="eyebrow sp-anim">08 · Software Process</div>
       <h2 class="mask-head">Agile, inside a <em>phased</em> plan.</h2>
       <p class="lead sp-anim">Five milestone-driven phases give clear structure; Agile practices inside each phase allow parallel work and iteration. Safety-critical parts are built and validated incrementally.</p>
     </div>
@@ -397,30 +460,30 @@ html,body{ background:var(--bg); }
 <section data-slide="usecase">
   <div class="slide-pad top">
     <div class="headblock" style="margin-bottom:.3rem;">
-      <div class="eyebrow uc-anim">07 · Use Case Diagram</div>
+      <div class="eyebrow uc-anim">09 · Use Case Diagram</div>
     </div>
     <img class="diagram" id="uc-svg" src="UseCase.jpg" alt="Use case diagram showing the interactions between the patient, clinician, and Mindro system across the therapy workflow.">
-    <p class="cap uc-anim">Only two people interact with Mindro: the <em>patient</em> who tells their story and lives the session, and the <em>clinician</em> who approves and oversees everything.</p>
+    <p class="cap uc-anim">Only two actors interact with Mindro: the <em>patient</em> who tells their story and lives the session, and the <em>clinician</em> who approves and oversees everything.</p>
   </div>
   <div class="speaker">Presented by <b>Yousef</b></div>
-  <aside class="notes">Two human actors only. The patient submits a story, records vitals, undergoes the VR session. The supervisor reviews and signs off, monitors live, and views history. Everything else is automated inside the system.</aside>
+  <aside class="notes">Two human actors only. The patient submits a story, records vitals, undergoes the XR session. The supervisor reviews and signs off, monitors live, and views history. Everything else is automated inside the system.</aside>
 </section>
 
 <!-- 8. TECHNOLOGY & TOOLS -->
 <section data-slide="tech">
   <div class="slide-pad">
     <div class="headblock">
-      <div class="eyebrow te-anim">08 · Technology &amp; Tools</div>
+      <div class="eyebrow te-anim">10 · Technology &amp; Tools</div>
       <h2 class="mask-head">A modular, API-first <em>stack</em>.</h2>
     </div>
     <div class="tech-grid">
       <div class="tech-card te-card"><div class="tt"><span class="d"></span>AI &amp; Data</div><div class="chips"><span class="chip">Python</span><span class="chip">PyTorch</span><span class="chip">TensorFlow</span><span class="chip">scikit-learn</span><span class="chip">Hugging Face</span><span class="chip">NumPy</span><span class="chip">pandas</span></div></div>
-      <div class="tech-card te-card "><div class="tt"><span class="d"></span>Neuro &amp; Signals</div><div class="chips"><span class="chip">MNE-Python</span><span class="chip">Nilearn</span><span class="chip">NiBabel</span><span class="chip">NeuroKit2</span><span class="chip">spaCy</span><span class="chip">NLTK</span></div></div>
-      <div class="tech-card te-card"><div class="tt"><span class="d"></span>XR &amp; Sensors</div><div class="chips"><span class="chip">Unity</span><span class="chip">VR headset</span><span class="chip">Spatial audio</span><span class="chip">Wearable vitals</span></div></div>
-      <div class="tech-card te-card "><div class="tt"><span class="d"></span>Backend &amp; Infrastructure</div><div class="chips"><span class="chip">ASP.NET</span><span class="chip">REST APIs</span><span class="chip">Web dashboard</span><span class="chip">SQL database</span><span class="chip">GPU cloud</span></div></div>
+      <div class="tech-card te-card "><div class="tt"><span class="d"></span>NeuroScience & NLP </div><div class="chips"><span class="chip">MNE-Python</span><span class="chip">Nilearn</span><span class="chip">NiBabel</span><span class="chip">NeuroKit2</span><span class="chip">spaCy</span><span class="chip">NLTK</span></div></div>
+      <div class="tech-card te-card"><div class="tt"><span class="d"></span>XR &amp; Sensors</div><div class="chips"><span class="chip">Unity</span><span class="chip">XR headset</span><span class="chip">Spatial audio</span><span class="chip">Wearable vitals</span></div></div>
+      <div class="tech-card te-card "><div class="tt"><span class="d"></span>Backend &amp; Infrastructure</div><div class="chips"><span class="chip">ASP.NET</span><span class="chip">FastAPI</span><span class="chip">REST APIs</span><span class="chip">Web dashboard</span><span class="chip">SQL database</span><span class="chip">GPU cloud</span></div></div>
     </div>
   </div>
-  <div class="speaker">Presented by <b>Abdullah</b></div>
+  <div class="speaker">Presented by <b>Yousef</b></div>
   <aside class="notes">The stack is modular and API first. Python for AI and data, neuroscience libraries for signals and the brain twin, Unity and wearables for XR and vitals, and an ASP.NET backend with a web dashboard on GPU cloud. Final choices may be refined in GP2.</aside>
 </section>
 
@@ -428,7 +491,7 @@ html,body{ background:var(--bg); }
 <section data-slide="conclusion">
   <div class="slide-pad">
     <div class="headblock">
-      <div class="eyebrow co-anim">09 · Conclusion</div>
+      <div class="eyebrow co-anim">11 · Conclusion</div>
       <h2 class="mask-head">One loop, three <em>contributions</em>.</h2>
     </div>
     <div class="concl">
@@ -581,19 +644,19 @@ html,body{ background:var(--bg); }
     for(const fd of folds){
       const f=fadeAt(PX(fd.pts[Math.floor(fd.pts.length/2)]));
       if(f<=0) continue;
-      ctx.strokeStyle='rgba(13,148,136,'+(fd.a*f)+')';
+ctx.strokeStyle='rgba(13,148,136,'+(fd.a*f*2.2)+')';
       ctx.lineWidth=fd.w; smooth(fd.pts,false); ctx.stroke();
     }
 
     /* faint inner rim, then crisp outer silhouette, per hemisphere */
     for(const h of HEMIS){
       smooth(h.inner,true);
-      ctx.strokeStyle=gradStroke(.10); ctx.lineWidth=1.0; ctx.stroke();
+ctx.strokeStyle=gradStroke(.22); ctx.lineWidth=1.2; ctx.stroke();
     }
-    ctx.shadowColor='rgba(20,184,166,.18)'; ctx.shadowBlur=9;
+ctx.shadowColor='rgba(20,184,166,.35)'; ctx.shadowBlur=18;
     for(const h of HEMIS){
       smooth(h.out,true);
-      ctx.strokeStyle=gradStroke(.27); ctx.lineWidth=1.9; ctx.stroke();
+ctx.strokeStyle=gradStroke(.55); ctx.lineWidth=2.4; ctx.stroke();
     }
     ctx.shadowBlur=0;
 
